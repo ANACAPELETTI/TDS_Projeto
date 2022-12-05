@@ -1,11 +1,14 @@
 package br.edu.utfpr.tds.api.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -34,6 +37,17 @@ public class Usuario {
 	@Size(min = 3, max= 150)
 	private String senha;
 	
+	@ManyToMany()
+	private List<Cargo> cargo;
+	
+	public List<Cargo> getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(List<Cargo> cargo) {
+		this.cargo = cargo;
+	}
+
 	public String getRa() {
 		return ra;
 	}

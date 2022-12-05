@@ -33,13 +33,13 @@ public class UsuarioResource {
 	@Autowired //Spring vai gerenciar a interface
 	private UsuarioService usuarioService;
 	@GetMapping //Quando for uma requisição do tipo Get no /cargo, irá cair nessa função
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
+	//@PreAuthorize("hasAuthority('ROLE_PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	public List<Usuario> listar() {
 	    return usuarioRepository.findAll();
 	}
 	
 	@PostMapping
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
+	//@PreAuthorize("hasAuthority('ROLE_CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Usuario> criar(@Valid @RequestBody Usuario usuario, HttpServletResponse response) {
 		Usuario usuarioSalvo = this.usuarioRepository.save(usuario);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, usuarioSalvo.getCodigo()));
@@ -47,7 +47,7 @@ public class UsuarioResource {
 	}
 	   
 	@GetMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
+	//@PreAuthorize("hasAuthority('ROLE_PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	public ResponseEntity<?> buscarPeloCodigo(@PathVariable Long codigo) {
 	   Optional<Usuario> usuario = this.usuarioRepository.findById(codigo);
 	   return usuario.isPresent() ? ResponseEntity.ok(usuario) : ResponseEntity.notFound().build();
@@ -55,13 +55,13 @@ public class UsuarioResource {
 	
 	@DeleteMapping("/{codigo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT) //Código 204, ou seja, deu certo mas não tem nada para retornar
-	@PreAuthorize("hasAuthority('ROLE_REMOVER_USUARIO') and #oauth2.hasScope('write')")
+	//@PreAuthorize("hasAuthority('ROLE_REMOVER_USUARIO') and #oauth2.hasScope('write')")
 	public void remover(@PathVariable Long codigo) {
 		this.usuarioRepository.deleteById(codigo);
 	}
 	
 	@PutMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_REDEFINE_SENHA')  and #oauth2.hasScope('read')")
+	//@PreAuthorize("hasAuthority('ROLE_REDEFINE_SENHA')  and #oauth2.hasScope('read')")
 	public ResponseEntity<Usuario> atualizar(@PathVariable Long codigo, @Valid @RequestBody Usuario usuario) {
 		Usuario usuarioSalvo = usuarioService.atualizar(codigo, usuario);
 		return ResponseEntity.ok(usuarioSalvo);

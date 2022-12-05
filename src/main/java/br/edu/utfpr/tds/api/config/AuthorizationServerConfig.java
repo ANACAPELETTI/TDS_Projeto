@@ -31,7 +31,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.secret("$2a$10$R8OyHvmX3lTHMcp8qoGlvu0B6eFf8HUpSmKiMtOPoF.VLInWAtwvu") //12345
 				.scopes("read", "write")
 				.authorizedGrantTypes("password", "refresh_token")
-				.accessTokenValiditySeconds(60) // token vai expirar em 5 minutos
+				.accessTokenValiditySeconds(900) // token vai expirar em 5 minutos
 				.refreshTokenValiditySeconds(3600*24) // refresh token vai expirar em 1 dia
 			.and()
 				// Simulação de client com escopo read

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -28,6 +29,9 @@ public class Pessoa {
     
     @OneToOne(mappedBy = "id_pessoa")
     private Usuario usuario;
+    
+    @ManyToMany()
+    private List<Trabalho> trabalho;
 
 	public Long getCodigo() {
         return codigo;
@@ -46,7 +50,7 @@ public class Pessoa {
     }
 
 	@JsonIgnoreProperties("pessoa")
-	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "pessoa", cascade = {CascadeType.PERSIST})
 	private List<Telefone> telefone;
     
     public List<Telefone> getTelefone() {

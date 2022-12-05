@@ -35,13 +35,13 @@ public class TrabalhoResource {
 	@Autowired //Spring vai gerenciar a interface
 	private TrabalhoService trabalhoService;
 	@GetMapping //Quando for uma requisição do tipo Get no /cargo, irá cair nessa função
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_TRABALHO') and #oauth2.hasScope('read')")
+	//@PreAuthorize("hasAuthority('ROLE_PESQUISAR_TRABALHO') and #oauth2.hasScope('read')")
 	public Page<Trabalho> pesquisar(TrabalhoFilter trabalhoFilter, Pageable pageable) {
 	    return trabalhoRepository.filtrar(trabalhoFilter, pageable);
 	}
 	
 	@PostMapping
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_TRABALHO') and #oauth2.hasScope('write')")
+	//@PreAuthorize("hasAuthority('ROLE_CADASTRAR_TRABALHO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Trabalho> criar(@RequestBody Trabalho trabalho, HttpServletResponse response) {
 		Trabalho trabalhoSalvo = this.trabalhoRepository.save(trabalho);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, trabalhoSalvo.getCodigo()));
@@ -49,21 +49,21 @@ public class TrabalhoResource {
 	}
 	   
 	@GetMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_TRABALHO') and #oauth2.hasScope('read')")
+	//@PreAuthorize("hasAuthority('ROLE_PESQUISAR_TRABALHO') and #oauth2.hasScope('read')")
 	public ResponseEntity<?> buscarPeloCodigo(@PathVariable Long codigo) {
 	   Optional<Trabalho> pessoa = this.trabalhoRepository.findById(codigo);
 	   return pessoa.isPresent() ? ResponseEntity.ok(pessoa) : ResponseEntity.notFound().build();
 	}
 	
 	@DeleteMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_REMOVE_TRABALHO') and #oauth2.hasScope('write')")
+	//@PreAuthorize("hasAuthority('ROLE_REMOVE_TRABALHO') and #oauth2.hasScope('write')")
 	@ResponseStatus(HttpStatus.NO_CONTENT) //Código 204, ou seja, deu certo mas não tem nada para retornar
 	public void remover(@PathVariable Long codigo) {
 		this.trabalhoRepository.deleteById(codigo);
 	}
 	
 	@PutMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_EDITA_TRABALHO') and #oauth2.hasScope('write')")
+	//@PreAuthorize("hasAuthority('ROLE_EDITA_TRABALHO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Trabalho> atualizar(@PathVariable Long codigo, @Valid @RequestBody Trabalho trabalho) {
 		Trabalho trabalhoSalvo = trabalhoService.atualizar(codigo, trabalho);
 		return ResponseEntity.ok(trabalhoSalvo);

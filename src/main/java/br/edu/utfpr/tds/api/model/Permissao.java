@@ -1,11 +1,14 @@
 package br.edu.utfpr.tds.api.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +20,9 @@ public class Permissao {
 	@NotEmpty
 	@Size(min = 3, max= 50)
 	private String descricao;
+	
+	@ManyToMany()
+	private List<Cargo> cargo;
 
 	public Long getCodigo() {
 		return codigo;

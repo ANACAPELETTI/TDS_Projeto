@@ -1,9 +1,12 @@
 package br.edu.utfpr.tds.api.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -12,6 +15,12 @@ public class Cargo{
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	private String descricao;
+	
+	@ManyToMany()
+	private List<Permissao> permissao;
+	
+	@ManyToMany()
+	private List<Usuario> usuario;
 
 	public Long getCodigo() {
 		return codigo;

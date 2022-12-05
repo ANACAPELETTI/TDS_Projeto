@@ -1,9 +1,12 @@
 package br.edu.utfpr.tds.api.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -17,6 +20,9 @@ public class Trabalho {
 	@NotEmpty
 	@Size(min = 10, max= 100)
     private String titulo;
+	
+	@ManyToMany()
+	private List<Pessoa> pessoa;
 
 	public Long getCodigo() {
 		return codigo;

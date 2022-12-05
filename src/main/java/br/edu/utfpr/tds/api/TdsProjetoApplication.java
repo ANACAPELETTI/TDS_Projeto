@@ -9,5 +9,4 @@ public class TdsProjetoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TdsProjetoApplication.class, args);
 	}
-
 }
